@@ -1,0 +1,420 @@
+##################################################################################
+#
+# Glassing Events
+#
+#
+#
+#Table of Contents
+#
+#glass_ball.1 = Target planet effect for triggering glassing options
+#glass_ball.2 = Exterminus options effects for the bombarding country
+	#glass_ball.2.a = Keep bombarding
+	#glass_ball.2.b = Nukes
+	#glass_ball.2.c = Glassing
+	#glass_ball.2.d = Viral Mind Parasite
+	#glass_ball.2.e = Composer
+#glass_ball.3 = Planet event for spawning viral mind parasite attack
+#glass_ball.4 = Parasite defeated
+#glass_ball.5 = Parasite victorious
+#glass_ball.6 = News reel to the rest of the galaxy of the plague defeat
+#glass_ball.7 = News reel to the rest of the galaxy of the plague victory
+##################################################################################
+
+namespace = glass_ball
+
+#Trigger for the country event viewing glassing options. Used to link the planet triggers to the player country.
+planet_event = {
+	id = glass_ball.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		#Bombarder is not ai and has glassing policy
+		FROM = {
+			is_ai = no
+			#Bombarder needs to have one of the gb policies
+			OR = {
+				has_policy_flag = gb_planet_destruction
+			}
+		}
+		#HIDDEN TRIGGER -> Go to on_actions from common\on_actions. See on_planet_bombarded
+		#Sufficient planetary devastation
+		planet_devastation > 80
+		#Has not postponed the annihilation
+		NOT = { has_planet_flag = keep_bombarding_flag }
+	}
+
+	immediate = {
+		FROM = {
+			country_event = { id = glass_ball.2 }
+		}
+	}
+}
+
+#Planet Destruction option menu appears for bombarder upon planet_event requirements met
+#From refers to the bombed planet
+#From = { owner = ...} refers to the owner of the bombed planet
+#From = { From = {} } refers to the bomber
+country_event = {
+	id = glass_ball.2
+	title = glass_ball.2.name
+	desc = glass_ball.2.desc
+	picture = GFX_evt_glassing
+	show_sound = event_air_raid_siren
+	location = from
+
+	is_triggered_only = yes
+
+	#Keep bombing
+	option = {
+		name = "glass_ball.2.a"
+		hidden_effect = {
+			FROM = {
+				set_timed_planet_flag = {
+					flag = keep_bombarding_flag
+					days = 30
+				}
+			}
+		}
+	}
+
+	#Nuking Option
+	option = {
+		name = "glass_ball.2.b"
+		custom_tooltip = glass_ball.2.b.tooltip
+
+		#Effects viewable to the player
+		#Cost to nuking
+		add_resource = { alloys = -200 volatile_motes = -200}
+
+		#Opinions and threat
+		#Everyone else Threat level and opinion
+		add_threat = { who = from.owner amount = 3 }
+		every_country = {
+			#Conditions: Not the attacker or victim
+			limit = {
+				#Condition: Not the attacker or victim. Not in federation with the attacker.
+				NOR = {
+					is_same_value = from.owner
+					is_same_value = root.owner
+					is_in_federation_with = from.owner
+				}
+				#Condition: Has comms with the victim OR attacker
+				OR = {
+					has_communications = from.owner
+					has_communications = root.owner
+				}
+				#Must be either in federation with victim or xenophile/egalitarian in some way. Applies to fallen/awakened empires too
+				OR = {
+					AND = {
+						is_in_federation_with = root.owner
+					}
+					has_ai_personality = awakened_fallen_empire_xenophile
+					AND = {
+						is_country_type = default
+						OR = {
+							is_egalitarian = yes
+							is_xenophile = yes
+						}
+					}
+				}
+			}
+
+			#Adds negative opinion for destroying a world
+			add_opinion_modifier = {
+				modifier = gb_opinion_nuked_a_world
+				who = from.owner
+			}
+		}
+		#Victim opinions
+		FROM = {
+			owner = {
+				#Angry for nuked
+				add_opinion_modifier = {
+					modifier = gb_opinion_nuked_my_world
+					who = from.owner
+				}
+				#Impact on their government ethics
+				if = {
+					limit = { NOT = { has_ethic = ethic_gestalt_consciousness } }
+					add_modifier = {
+						modifier = gb_extermination_victim
+						days = 14610 # 40 years
+					}
+				}
+			}
+		}
+		# Add war exhaustion to planet owner
+		FROM = {
+			if = {
+				limit = {
+					exists = owner
+				}
+				owner = {
+					add_static_war_exhaustion = {
+						attacker = from.fleet.owner
+						location = root
+						value_for_planet_destruction = 0.5
+					}
+				}
+			}
+		}
+		#Primitive Civilization
+		if = {
+			#If owner exists and was primitive
+			limit = {
+				owner = exists
+				owner = { is_country_type = primitive}
+			}
+			every_country = {
+				#Conditions: Not the attacker or victim
+					limit = {
+						#Condition: Not the attacker or victim. Not in federation with the attacker.
+							NOR = {
+								is_same_value = from.owner
+								is_same_value = root.owner
+								is_in_federation_with = from.owner
+							}
+						#Condition: Has comms with the victim OR attacker
+							OR = {
+								has_communications = from.owner
+								has_communications = root.owner
+							}
+						#Must be either in federation with victim or xenophile/egalitarian in some way. Applies to fallen/awakened empires too
+							OR = {
+								AND = {
+									is_in_federation_with = root.owner
+								}
+								has_ai_personality = awakened_fallen_empire_xenophile
+								AND = {
+									is_country_type = default
+									OR = {
+										is_egalitarian = yes
+										is_xenophile = yes
+									}
+								}
+							}
+					}
+
+				#Adds negative opinion for destroying a world
+					add_opinion_modifier = {
+						modifier = gb_opinion_nuked_a_primitive_world
+						who = from.owner
+					}
+			}
+		}
+
+		#Hidden effects: Destruction, pop death, etc.
+		hidden_effect = {
+			#Planet effects
+			FROM = {
+				every_owned_pop = { kill_pop = yes }
+				remove_all_buildings = yes
+				remove_all_districts = yes
+				clear_blockers = yes
+
+				#Planet Modifers removed: needs to be updated when the game is
+				remove_modifier = pm_atmospheric_aphrodisiac
+				remove_modifier = pm_atmospheric_hallucinogen
+				remove_modifier = pm_lush
+				remove_modifier = pm_natural_beauty
+				remove_modifier = pm_dangerous_wildlife
+				remove_modifier = pm_titanic_life
+				remove_modifier = pm_ancient_forgeworld
+				remove_modifier = pm_robot_workers
+				remove_modifier = pm_ancient_factory
+				remove_modifier = pm_ancient_automation
+				remove_modifier = pm_ancient_weapon
+
+				#Logic: if ringworld change pc class to damaged else change to tomb.
+				if = {
+					limit = {
+						is_ringworld = yes
+					}
+					change_pc = pc_ringworld_habitable_damaged
+				}
+				if = {
+					limit = {
+						is_ringworld = no
+					}
+					change_pc = pc_nuked
+				}
+			}
+		}
+	}
+
+	#Glassing Option
+	option = {
+		name = "glass_ball.2.c"
+		custom_tooltip = glass_ball.2.c.tooltip
+
+		trigger = {
+			FROM = { is_ringworld = no }
+		}
+
+		#Effects viewable to player
+		#Cost to glassing
+		add_resource = {
+			energy = -1000
+			exotic_gases = -200
+		}
+
+		#Opinions and threat
+		#Everyone else Threat level and opinion
+		add_threat = { who = from.owner amount = 3 }
+		every_country = {
+			#Conditions: Not the attacker or victim
+				limit = {
+					#Condition: Not the attacker or victim. Not in federation with the attacker.
+						NOR = {
+							is_same_value = from.owner
+							is_same_value = root.owner
+							is_in_federation_with = from.owner
+						}
+					#Condition: Has comms with the victim OR attacker
+						OR = {
+							has_communications = from.owner
+							has_communications = root.owner
+						}
+					#Must be either in federation with victim or xenophile/egalitarian in some way. Applies to fallen/awakened empires too
+						OR = {
+							AND = {
+								is_in_federation_with = root.owner
+							}
+							has_ai_personality = awakened_fallen_empire_xenophile
+							AND = {
+								is_country_type = default
+								OR = {
+									is_egalitarian = yes
+									is_xenophile = yes
+								}
+							}
+						}
+				}
+
+			#Adds negative opinion for destroying a world
+				add_opinion_modifier = {
+					modifier = gb_opinion_glassed_a_world
+					who = from.owner
+				}
+		}
+		#Victim opinions
+		FROM = {
+			owner = {
+				#Opinion Modifier
+				add_opinion_modifier = {
+					modifier = gb_opinion_glassed_my_world
+					who = from.owner
+				}
+				#Impact on their government ethics
+				if = {
+					limit = { NOT = { has_ethic = ethic_gestalt_consciousness } }
+					add_modifier = {
+						modifier = gb_extermination_victim
+						days = 14610 # 40 years
+					}
+				}
+			}
+		}
+		# Add war exhaustion to planet owner
+		FROM = {
+			if = {
+				limit = {
+					exists = owner
+				}
+				owner = {
+					add_static_war_exhaustion = {
+						attacker = from.fleet.owner
+						location = root
+						value_for_planet_destruction = 0.5
+					}
+				}
+			}
+		}
+		#Primitive Civilization
+		if = {
+			#If owner exists and was primitive
+			limit = {
+				owner = exists
+				owner = { is_country_type = primitive}
+			}
+			every_country = {
+				#Conditions: Not the attacker or victim
+				limit = {
+					#Condition: Not the attacker or victim. Not in federation with the attacker.
+					NOR = {
+						is_same_value = from.owner
+						is_same_value = root.owner
+						is_in_federation_with = from.owner
+					}
+					#Condition: Has comms with the victim OR attacker
+					OR = {
+						has_communications = from.owner
+						has_communications = root.owner
+					}
+					#Must be either in federation with victim or xenophile/egalitarian in some way. Applies to fallen/awakened empires too
+					OR = {
+						AND = {
+							is_in_federation_with = root.owner
+						}
+						has_ai_personality = awakened_fallen_empire_xenophile
+						AND = {
+							is_country_type = default
+							OR = {
+								is_egalitarian = yes
+								is_xenophile = yes
+							}
+						}
+					}
+				}
+
+				#Adds negative opinion for destroying a world
+				add_opinion_modifier = {
+					modifier = gb_opinion_glassed_a_primitive_world
+					who = from.owner
+				}
+			}
+		}
+
+		#Hidden effects
+		hidden_effect = {
+			#Planet effects
+			FROM = {
+				every_owned_pop = { kill_pop = yes }
+				remove_all_buildings = yes
+				remove_all_districts = yes
+				clear_blockers = yes
+				#clear_planet_modifiers = yes		#Should not clear ALL the planet modifiers
+
+				#Planet Modifers removed: needs to be updated when the game is
+				remove_modifier = pm_atmospheric_aphrodisiac
+				remove_modifier = pm_atmospheric_hallucinogen
+				remove_modifier = pm_lush
+				remove_modifier = pm_natural_beauty
+				remove_modifier = pm_dangerous_wildlife
+				remove_modifier = pm_titanic_life
+				remove_modifier = pm_ancient_forgeworld
+				remove_modifier = pm_robot_workers
+				remove_modifier = pm_ancient_factory
+				remove_modifier = pm_ancient_automation
+				remove_modifier = pm_ancient_weapon
+
+
+				#Logic: if ringworld change pc class to damaged else change to glassed.
+				if = {
+					limit = {
+						is_ringworld = yes
+					}
+					change_pc = pc_ringworld_habitable_damaged
+				}
+				if = {
+					limit = {
+						is_ringworld = no
+					}
+					change_pc = pc_glassed
+				}
+
+			}
+		}
+	}
+}

@@ -1,0 +1,35 @@
+## Armament Doctrine ##
+
+gb_exterminus_doctrine = {
+	potential = {
+        is_country_type = default
+        is_ai = no
+    }
+	#Conventional bombing
+    option = {
+        name = "Conventional Bombardment"
+				desc = "Use conventional space weapons to whittle down the enemy defences."
+
+        policy_flags = {
+            gb_carpet_bombing
+        }
+
+        modifier = { }
+    }
+	#Destruction mode
+		option = {
+				name = "Planetary Annihilation"
+				desc = "Authorize weapons of mass destruction."
+
+				policy_flags = {
+						gb_planet_destruction
+				}
+
+				#Fleet vulnerability for excessive weapon usage. Also for balance
+					modifier = {
+			            weapon_type_energy_weapon_damage_mult = -0.1
+				        	weapon_type_energy_weapon_fire_rate_mult = -0.2
+			            weapon_type_explosive_weapon_damage_mult = -0.2
+					}
+		}
+}

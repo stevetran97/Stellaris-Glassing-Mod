@@ -1,0 +1,13 @@
+﻿Tired of landing and seizing planets that you do not want?
+This mod allows you just to glass it into ruins!
+
+After 80% bombardment of a planet, you can choose whether to glass it or nuke it. Glassing makes a planet no longer colonizable.
+
+Feature:
+After a indiscriminate or armageddon bombardment and the devastation of the bombarded planet is above 80%, you can choose to
+1. Glass the planet for 600 energy. remove all creatures from the planet, and make the planet into an uncolonizable dead world forever. This can be reversed with a console command (planet_class [class])
+2. Nuke the planet for 200 alloys and 200 minerals which removes all creatures and turns the planet into a tomb world.
+3. Continue bombardment
+
+TODO:
+1 re-colonizable a glassed planet.

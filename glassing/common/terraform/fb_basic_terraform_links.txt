@@ -1,0 +1,23 @@
+####################################
+## Terraform from glassed to arid ##
+####################################
+#Must terraform from glassed to arid first before terraforming from arid to anything else
+#Costly and takes a long time in case some players want to use it to stop AI from planet spamming
+
+
+
+terraform_link = {
+	from = "pc_glassed"
+	to = "pc_arid"
+
+	energy = 100000
+	duration = 18250			#50 years
+
+	condition = {
+		has_technology = "tech_terrestrial_sculpting"
+	}
+
+	ai_weight = {
+		weight = 0
+	}
+}

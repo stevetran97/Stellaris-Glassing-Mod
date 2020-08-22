@@ -1,0 +1,138 @@
+#Glassing
+	# Glassed any planet
+	gb_opinion_glassed_a_world = {
+		opinion = {
+			base = -100
+		}
+
+		accumulative = yes
+
+		min = -500
+
+		decay = {
+			base = 1
+		}
+	}
+
+	# Glassed OUR planet
+	gb_opinion_glassed_my_world = {
+		opinion = {
+			base = -1000
+		}
+
+		accumulative = yes
+
+		min = -5000
+
+		decay = {
+			base = 1
+		}
+	}
+
+	#Glassed a primitive
+	gb_opinion_glassed_a_primitive_world = {
+		opinion = {
+			base = -40
+		}
+
+		accumulative = yes
+
+		min = -200
+
+		decay = {
+			base = 1
+		}
+	}
+
+	#Glassed a primitive to a xenophile
+	gb_opinion_glassed_a_primitive_world_phile = {
+		opinion = {
+			base = -60
+		}
+
+		accumulative = yes
+
+		min = -300
+
+		decay = {
+			base = 1
+		}
+	}
+
+
+	# Glassed a random planet
+	gb_opinion_glassed_a_world = {
+		opinion = {
+			base = -100
+		}
+
+		accumulative = yes
+
+		min = -500
+
+		decay = {
+			base = 1
+		}
+	}
+
+
+#Nuking
+	# Nuked any planet
+	gb_opinion_nuked_a_world = {
+		opinion = {
+			base = -100
+		}
+
+		accumulative = yes
+
+		min = -500
+
+		decay = {
+			base = 1
+		}
+	}
+
+	# Nuked OUR planet
+	gb_opinion_nuked_my_world = {
+		opinion = {
+			base = -500
+		}
+
+		accumulative = yes
+
+		min = -5000
+
+		decay = {
+			base = 1
+		}
+	}
+
+	#Glassed a primitive
+	gb_opinion_nuked_a_primitive_world = {
+		opinion = {
+			base = -40
+		}
+
+		accumulative = yes
+
+		min = -200
+
+		decay = {
+			base = 1
+		}
+	}
+
+	#Glassed a primitive to a xenophile
+	gb_opinion_nuked_a_primitive_world_phile = {
+		opinion = {
+			base = -60
+		}
+
+		accumulative = yes
+
+		min = -300
+
+		decay = {
+			base = 1
+		}
+	}

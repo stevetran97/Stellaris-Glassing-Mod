@@ -1,0 +1,85 @@
+﻿l_english:
+  #Destruction Menu
+    glass_ball.2.name:0 "Planet bombarded"
+    glass_ball.2.desc:0 "My [Root.GetRulerTitle], [From.GetName] is fully bombarded. What should we do next?"
+
+    glass_ball.2.a:0   "Keep bombarding."
+
+    glass_ball.2.b:0 "Nuke it!"
+    glass_ball.2.b.tooltip:1 "[From.GetName] will be nuked totally. All lives are wasted."
+
+    glass_ball.2.c:0 "Glass it!"
+    glass_ball.2.c.tooltip:1 "[From.GetName] will be bombarded into a large glass ball permanently. Lives can no longer settle on it."
+
+    glass_ball.2.d:0 "The Parasite"
+    glass_ball.2.d.tooltip:1 "Unleash the parasite on [From.GetName]."
+
+    glass_ball.2.e:0 "Compose them"
+    glass_ball.2.e.tooltip:1 "The people of [From.GetName] will serve us."
+
+  #Parasite
+    glass_ball.3.title: "Infectious Mind Parasites"
+    glass_ball.3.name:0 "Infectious Mind Parasites"
+    glass_ball.3.desc:0 "Infectious Mind Parasites have been released all over the planet..."
+
+    glass_ball.4.name:0 "Parasite repelled"
+    glass_ball.4.desc:0 "The last of the parasite dropped on [From.From.GetName] has been eradicated."
+
+    glass_ball.5.name:0 "[From.From.From.GetName] Overrun!"
+    glass_ball.5.desc:0 "An unstoppable tide of rotting biomass has consumed the planet of [From.From.From.GetName]."
+
+    glass_ball.6.name:0 "Monstrosities on [From.From.GetName]"
+    glass_ball.6.desc:0 "The Aliens of [From.From.From.GetName] were first to experience the onslaught of The Plague. Huge swaths of the planets citizens were horifically morphed into feral biological warforms, threatening to overrun the planet. Despite losing the majority of the planet, the planet militia managed to stop the onslaught only through the indiscriminate glassing of their own cities. The survivors have began to clear out the mounds of rotting corpses in hopes of rebuilding their once great planet. "
+
+    glass_ball.7.name:0 "[From.From.From.GetName] Overrun!"
+    glass_ball.7.desc:0 "An unstoppable tide of rotting biomass has consumed the planet of [From.From.From.GetName]. Billions were torn apart and reconfigured to create a new unprecedented lifeform as the planet were unable to hold back thetide. A planet-sized unified Keymind now covers the alien world..."
+
+  #Composer
+    glass_ball.3.title: "Composed"
+    glass_ball.3.name:0 "Composed"
+    glass_ball.3.desc:0 "This species will now serve us..."
+
+  #Troops
+    gb_carrier_forms_army:0 "Carrier Forms"
+    gb_carrier_forms_army_plural:0 "Carrier Forms"
+    gb_carrier_forms_army_desc:0 "Bloated masses which act as a actor transport for parasite super cells."
+
+    gb_combat_form_army:0 "Combat Forms"
+    gb_combat_form_army_plural:0 "Combat Forms"
+    gb_combat_form_army_desc:0 "Infected members of the other species mutated to combat hostile entities and spread the plague."
+
+    gb_pure_forms_army:0 "Pure Forms"
+    gb_pure_forms_army_plural:0 "Pure Forms"
+    gb_pure_forms_army_desc:0 "Collected Biomass morphed into situation specific combat forms."
+
+    gb_juggernaut_army:0 "Juggernaut"
+    gb_juggernaut_army_plural:0 "Juggernauts"
+    gb_juggernaut_army_desc:0 "Huge agglomerations of biomass morphed into a titanic bipedal combat form. Capable of obliterating entire platoons, buildings, and heavy vehicles with a swing of a tendril."
+
+  #Personalities
+    personality_gb_plague_personality:0 "Relentless Parasite"
+    personality_gb_plague_personality_desc:0 "...I...am a monument to all your sins....."
+
+  #Civics (Unused)
+    civic_gb_plague_keymind:0 "Keymind"
+    civic_gb_plague_keymind_desc:0 "The planets worth of biomass provides the Keymind with extreme intelligence."
+
+    civic_gb_plague_advanced_neural_physics:0 "Advanced Neural Physics"
+    civic_gb_plague_advanced_neural_physics_desc:0 "The ability to communicate in upper dimension levels allows the plague to communicate with plagued beings all throughout the galaxy."
+
+  #Opinions
+    gb_opinion_glassed_a_world:0 "Glassed a World"
+    gb_opinion_glassed_my_world:0 "Glassed our World"
+    gb_opinion_glassed_a_primitive_world:0 "Glassed a Developing Civilization"
+
+
+    gb_opinion_nuked_a_world:0 "Nuked a World"
+    gb_opinion_nuked_my_world:0 "Nuked our World"
+    gb_opinion_nuked_a_primitive_world:0 "Nuked a Developing Civilization"
+
+  #Ethics attraction for planet glassing
+    gb_extermination_victim:0 "Vengeful"
+
+  #Doctrines
+    policy_gb_exterminus_doctrine:0 "Planetary Destruction"
+    policy_gb_exterminus_doctrine_desc:0 "Allow your fleets to glass enemy planets."
